@@ -1,0 +1,62 @@
+バリデーションのやり方
+①アクション内での操作
+②struts.xmlでの操作
+③jspでの操作
+の三つの段階を踏んでバリデーションは完成します。順を追って説明します。
+
+①アクション内での操作
+アクション内で、まずActionSupportクラスを継承します。具体的には、
+
+public class PaymentAction extends ActionSupport implements SessionAware  {
+.....
+｝
+
+って感じです。この例はPaymentActionがActionSupportクラスを継承しているという事を表しています。
+この継承を行うと、アクション内でvalidateメソッドが使えます。
+そのメソッド内でエラーを出したい条件などを追加していきます。
+
+public void validate(){
+	if(条件式){
+	addActionError("エラーメッセージをここに書く");
+	}
+}
+
+addActionErrorは条件式に当てはまった時に表示するエラーメッセージです。それぞれ各自で設定しましょう。
+アクション内での操作は以上です。
+
+②struts.xmlでの操作
+struts.xmlにて、上記のアクションに遷移する<action></action>に下のソースを追加します。
+
+<result name="input">/繊維先のページ</result>
+
+って感じです。具体的には、
+
+<action name="PaymentAction"class="jp.co.internous.ichigoichie.action.PaymentAction" method="execute">
+	<result name="success">/ConfirmReservation.jsp</result>
+	<result name="error">/Payment.jsp</result>
+	<result name="input">/Payment.jsp</result>
+</action>
+
+って感じです。いつものお決まりの箇所にinputが追加された形です。
+struts.xml出の操作は以上です。
+
+③jspでの操作
+jsp内で以下のタグを追加するとエラーメッセージが表示されるようになります。
+
+<s:actionerror/>
+
+このタグ一つを追加すると、該当エラーメッセージ全てを追加した箇所に表示させます。
+jsp出の操作は以上です。
+
+<s:actionerror/>でエラーメッセージを表示させると、エラーメッセージの前に「・」ガ表示されてしまいます。
+それをなくすためにはjspファイルで以下を記述します。
+
+<style>
+.errorMessage{
+list-style-type: none
+}
+</style>
+
+以上で終わります。
+
+

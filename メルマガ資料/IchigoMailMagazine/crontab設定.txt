@@ -1,0 +1,27 @@
+$ /etc/rc.d/init.d/crond status
+にてステータスを確認 起動していない場合は
+
+$ /etc/rc.d/init.d/crond start
+でcronを起動する
+
+cronの設定
+$ crontab -e
+vimで編集する
+
+/home/centos/IchigoMailMagazine/Mail_MAGAZINE.shを午後15時25分に自動実行させたい場合
+
+25 15 * * * /home/centos/IchigoMailMagazine/Mail_MAGAZINE.sh    
+
+を記述する。
+
+これで登録おｋ
+登録しているcronの一覧を確認する場合は
+
+$ crontab -l
+
+登録されているcronを削除する場合は
+$ crontab -r
+###ただし、全部削除されるので注意###
+
+ホームディレクトリ等の設定は/etc/crontabを編集すること
+
